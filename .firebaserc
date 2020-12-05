@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "production": "ambee-cloud",
+    "staging": "ambee-cloud-staging"
+  }
+}
