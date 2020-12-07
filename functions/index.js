@@ -22,7 +22,7 @@ const app = express();
 
 // }));
 
-var allowedOrigins = ['http://localhost:3000',
+var allowedOrigins = ['http://localhost:8081',
     'https://progress.ambee.app'];
 app.use(cors({
     origin: function (origin, callback) {
@@ -59,7 +59,7 @@ app.post('/subscribe', (req, res, next) => {
 
             const responseJson = mailerLiteResponse.json();
 
-            res.status(200).send(await responseJson);
+            res.status(responseJson.status).send(await responseJson);
             console.log('mailer response: ', await responseJson);
         } catch (err) {
             return next(err)
