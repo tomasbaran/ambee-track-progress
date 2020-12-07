@@ -37,13 +37,14 @@ app.use(cors({
         return callback(null, true);
     }
 }));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000
-
 app.post('/subscribe', (req, res, next) => {
 
-    console.log(req.body);
+
+    console.log('req.body: ', req.body);
+    //console.log('req.body.email', req.body.email);
+
 
     (async function () {
         try {
@@ -59,7 +60,7 @@ app.post('/subscribe', (req, res, next) => {
 
             const responseJson = mailerLiteResponse.json();
 
-            res.status(responseJson.status).send(await responseJson);
+            res.status(responseJson.status).send(await responseJson.body);
             console.log('mailer response: ', await responseJson);
         } catch (err) {
             return next(err)
