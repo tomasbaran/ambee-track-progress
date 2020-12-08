@@ -41,10 +41,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000
 app.post('/subscribe', (req, res, next) => {
 
-
+    console.log('stringify', JSON.stringify(req.body));
     console.log('req.body: ', req.body);
     //console.log('req.body.email', req.body.email);
-
 
     (async function () {
         try {
@@ -52,16 +51,19 @@ app.post('/subscribe', (req, res, next) => {
                 method: 'POST',
                 mode: 'Cors',
                 headers: {
+                    'content-type': 'application/json',
                     'X-MailerLite-ApiKey': sensitive.apiKey,
-                    'content-type': 'application/json'
                 },
                 body: JSON.stringify(req.body)
+
             });
 
-            const responseJson = mailerLiteResponse.json();
 
-            res.status(responseJson.status).send(await responseJson.body);
-            console.log('mailer response: ', await responseJson);
+            const responseJson = await mailerLiteResponse.json();
+
+            res.status(mailerLiteResponse.status).send(mailerLiteResponse.body);
+
+            console.log('mailer response: ', responseJson);
         } catch (err) {
             return next(err)
         }
